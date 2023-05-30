@@ -5,7 +5,7 @@ The Garden App allows users to define gardens on a map by specifying their areas
 ### Database Diagram
 View database diagram of the Garden App from [here](https://drawsql.app/teams/me-438/diagrams/gardenapp).
 
-![GardenApp_DatabaseDiagram](https://github.com/snnehir/Turkcell-GYGY3-Bootcamp-Exercises/SQL/GardenAppDiagram.png)
+![GardenApp_DatabaseDiagram](https://github.com/snnehir/Turkcell-GYGY3-Bootcamp-Exercises/blob/master/SQL/GardenAppDiagram.png)
 
 ### Tables
 
