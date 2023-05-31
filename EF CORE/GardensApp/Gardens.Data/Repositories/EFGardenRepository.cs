@@ -1,37 +1,50 @@
 ﻿using Gardens.Entitiy;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gardens.Data.Repositories
 {
     public class EFGardenRepository : IGardenRepository
     {
-        public Task CreateAsync(Garden entity)
+        private readonly GardenDbContext gardenDbContext;
+        public EFGardenRepository(GardenDbContext gardenDbContext)
         {
-            throw new NotImplementedException();
+            this.gardenDbContext = gardenDbContext;
         }
 
-        public Task DeleteAsync(Garden entity)
+        public async Task CreateAsync(Garden entity)
         {
-            throw new NotImplementedException();
+            await gardenDbContext.Gardens.AddAsync(entity);
+            await gardenDbContext.SaveChangesAsync(); // Persistance API
         }
 
-        public Task<IList<Garden>> GetAllAsync()
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var garden = await gardenDbContext.Gardens.AsNoTracking().FirstOrDefaultAsync(g => g.Id == id);
+            gardenDbContext.Gardens.Remove(garden);
+            await gardenDbContext.SaveChangesAsync();
         }
 
-        public Task<Garden> GetByIdAsync(int id)
+        public async Task<IList<Garden>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await gardenDbContext.Gardens.AsNoTracking().ToListAsync();
         }
 
-        public Task<IList<Garden>> SearchGardenByName(string name)
+        public async Task<Garden?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await gardenDbContext.Gardens.AsNoTracking().FirstOrDefaultAsync(g => g.Id == id);
         }
 
-        public Task UpdateAsync(Garden entity)
+        public async Task<IList<Garden>> SearchGardenByName(string name)
         {
-            throw new NotImplementedException();
+            return await gardenDbContext.Gardens.AsNoTracking()
+                                         .Where(g => g.Name.Contains(name))
+                                         .ToListAsync();   
+        }
+
+        public async Task UpdateAsync(Garden entity)
+        {
+            gardenDbContext.Gardens.Update(entity);
+            await gardenDbContext.SaveChangesAsync();
         }
     }
 }

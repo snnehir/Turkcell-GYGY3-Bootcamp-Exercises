@@ -7,10 +7,10 @@ namespace Gardens.Data.Repositories
     {
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task DeleteAsync(int id);
 
         Task<IList<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
+        Task<T?> GetByIdAsync(int id);
 
 
     }

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gardens.Entitiy", "Gardens.Entitiy\Gardens.Entitiy.csproj", "{203FC2A8-8BA1-4D59-AE21-EB205ED9B9BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardens.Entitiy", "Gardens.Entitiy\Gardens.Entitiy.csproj", "{203FC2A8-8BA1-4D59-AE21-EB205ED9B9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gardens.Data", "Gardens.Data\Gardens.Data.csproj", "{6EB5DD9C-656D-4BFD-B06E-E94C9DB4A590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardens.Data", "Gardens.Data\Gardens.Data.csproj", "{6EB5DD9C-656D-4BFD-B06E-E94C9DB4A590}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gardens.Application", "Gardens.Application\Gardens.Application.csproj", "{649A2C98-2EE0-42FB-A9C8-3709F30A2C93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6EB5DD9C-656D-4BFD-B06E-E94C9DB4A590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EB5DD9C-656D-4BFD-B06E-E94C9DB4A590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EB5DD9C-656D-4BFD-B06E-E94C9DB4A590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{649A2C98-2EE0-42FB-A9C8-3709F30A2C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{649A2C98-2EE0-42FB-A9C8-3709F30A2C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{649A2C98-2EE0-42FB-A9C8-3709F30A2C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{649A2C98-2EE0-42FB-A9C8-3709F30A2C93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
