@@ -26,7 +26,9 @@ namespace Gardens.Data.Repositories
 
         public async Task<IList<Garden>> GetAllAsync()
         {
-            return await gardenDbContext.Gardens.AsNoTracking().ToListAsync();
+            return await gardenDbContext.Gardens.AsNoTracking().Include(go => go.Owners)
+                                                               .ThenInclude(o => o.Owner)
+                                                               .ToListAsync();  
         }
 
         public async Task<Garden?> GetByIdAsync(int id)
