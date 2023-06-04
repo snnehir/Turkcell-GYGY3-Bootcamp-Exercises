@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PlantDisplayResponse>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var plantDisplay in Model)
+    {
+
+        var rateStar = new string('⭐', (int)plantDisplay.Rating);
+
+        <div class="col-3">
+
+            <div class="card">
+                <img src="@plantDisplay.ImageUrl" class="img-fluid" />
+                <div class="card-body">
+                    <h4 class="card-title">@plantDisplay.Name</h4>
+
+                    <p class="card-text"> @rateStar </p>
+                    <p class="card-text">@plantDisplay.Price $</p>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
