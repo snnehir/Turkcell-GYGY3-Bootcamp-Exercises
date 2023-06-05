@@ -15,9 +15,10 @@ namespace GardenApp.Mvc.Controllers
             _plantService = plantService;
         }
 
-        public IActionResult Index(int pageNo = 1)
+        public IActionResult Index(int pageNo = 1, int? plantTypeId = null)
         {
-            var plants = _plantService.GetPlantDisplayResponse();
+            var plants = plantTypeId == null ? _plantService.GetPlantDisplayResponse()
+                                             : _plantService.GetPlantByPlantType(plantTypeId.Value);
 
             var plantCount = plants.Count();    
             var plantPerPage = 8;

@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GardenApp.Infrastructure", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{C0109527-CD0D-4D37-BA83-6D6EC3B25716}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GardenApp.Entities", "src\domain\GardenApp.Entities\GardenApp.Entities.csproj", "{BE85F8BC-F419-42E2-A901-256D0AE2F45C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GardenApp.Entities", "src\domain\GardenApp.Entities\GardenApp.Entities.csproj", "{BE85F8BC-F419-42E2-A901-256D0AE2F45C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

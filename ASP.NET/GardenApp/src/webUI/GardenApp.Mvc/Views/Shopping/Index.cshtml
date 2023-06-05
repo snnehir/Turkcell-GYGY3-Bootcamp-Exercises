@@ -1,0 +1,36 @@
+﻿@model PlantCollection
+
+<h1>Your Cart</h1>
+@if (Model.PlantItems.Count == 0)
+{
+    <div class="alert alert-danger">You did not add any plant to your cart!</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Plant Name</th>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Subtotal</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var plantItem in Model.PlantItems)
+            {
+                <tr>
+                    <td>@plantItem.Plant.Name</td>
+                    <td>@plantItem.Plant.Price$</td>
+                    <td>@plantItem.Quantity</td>
+                    <td>@(plantItem.Quantity * plantItem.Plant.Price)$</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Total Price: @Model.TotalPrice()$</td>
+            </tr>
+        </tfoot>
+    </table>
+}

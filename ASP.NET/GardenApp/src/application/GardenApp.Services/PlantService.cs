@@ -1,5 +1,5 @@
 ﻿using GardenApp.DataTransferObjects.Responses;
-using GardenApp.Infrastructure.Repositories;
+using GardenApp.Infrastructure.Repositories.PlantRepository;
 using Mapster;
 using MapsterMapper;
 
@@ -13,6 +13,21 @@ namespace GardenApp.Services
         {
             _repository = plantRepository;
         }
+
+        public PlantDisplayResponse GetPlant(int id)
+        {
+            var plant = _repository.Get(id);
+            var plantResponse = plant.Adapt<PlantDisplayResponse>();
+            return plantResponse;
+        }
+
+        public IEnumerable<PlantDisplayResponse> GetPlantByPlantType(int plantTypeId)
+        {
+            var plants = _repository.GetPlantsByType(plantTypeId);
+            var responses = plants.Adapt<IEnumerable<PlantDisplayResponse>>();
+            return responses;
+        }
+
         public IEnumerable<PlantDisplayResponse> GetPlantDisplayResponse()
         {
             var items = _repository.GetAll();

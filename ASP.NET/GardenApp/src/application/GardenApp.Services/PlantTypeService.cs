@@ -1,5 +1,6 @@
 ﻿using GardenApp.DataTransferObjects.Responses;
-using GardenApp.Infrastructure.Repositories;
+using GardenApp.Infrastructure.Repositories.PlantRepository;
+using GardenApp.Infrastructure.Repositories.PlantTypeRepository;
 using Mapster;
 using MapsterMapper;
 
@@ -7,10 +8,8 @@ namespace GardenApp.Services
 {
     public class PlantTypeService: IPlantTypeService
     {
-        private readonly IPlantRepository _repository;
-        private readonly IMapper _mapper;
-        public PlantTypeService(IPlantRepository plantTypeRepository, IMapper mapper) {
-            _mapper = mapper;
+        private readonly IPlantTypeRepository _repository;
+        public PlantTypeService(IPlantTypeRepository plantTypeRepository) {
             _repository = plantTypeRepository;
         }
         public IEnumerable<PlantTypeDisplayResponse> GetPlantTypesForList()

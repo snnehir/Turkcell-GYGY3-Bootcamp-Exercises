@@ -3,7 +3,7 @@ using GardenApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace GardenApp.Infrastructure.Repositories
+namespace GardenApp.Infrastructure.Repositories.PlantRepository
 {
     public class EFPlantRepository : IPlantRepository
     {
@@ -27,7 +27,7 @@ namespace GardenApp.Infrastructure.Repositories
 
         public Plant? Get(int id)
         {
-            return _context.Plants.SingleOrDefault(p=> p.Id == id);
+            return _context.Plants.SingleOrDefault(p => p.Id == id);
         }
 
         public IList<Plant?> GetAll()
@@ -52,7 +52,7 @@ namespace GardenApp.Infrastructure.Repositories
 
         public IEnumerable<Plant> GetPlantsByName(string name)
         {
-            return _context.Plants.AsNoTracking().Where(p=> p.Name.Contains(name)).AsEnumerable();
+            return _context.Plants.AsNoTracking().Where(p => p.Name.Contains(name)).AsEnumerable();
         }
 
         public IEnumerable<Plant> GetPlantsByType(int plantTypeId)

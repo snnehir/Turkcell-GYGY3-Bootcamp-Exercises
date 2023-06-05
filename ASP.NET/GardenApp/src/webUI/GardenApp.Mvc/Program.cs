@@ -1,6 +1,6 @@
-using GardenApp.Infrastructure.Repositories;
+using GardenApp.Infrastructure.Repositories.PlantRepository;
+using GardenApp.Infrastructure.Repositories.PlantTypeRepository;
 using GardenApp.Services;
-using Mapster;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPlantService, PlantService>();
 builder.Services.AddScoped<IPlantRepository, FakePlantRepository>();
+builder.Services.AddScoped<IPlantTypeService, PlantTypeService>();
+builder.Services.AddScoped<IPlantTypeRepository, FakePlantTypeRepository>();
 
+builder.Services.AddSession(opt =>
+{
+    opt.IdleTimeout = TimeSpan.FromMinutes(15);
+});
 
 var app = builder.Build();
 
@@ -22,6 +28,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 
