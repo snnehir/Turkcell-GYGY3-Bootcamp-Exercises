@@ -15,11 +15,35 @@ namespace GardenApp.Mvc.Controllers
             _plantService = plantService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNo = 1)
         {
-            var plantTypes = _plantService.GetPlantDisplayResponse();
+            var plants = _plantService.GetPlantDisplayResponse();
 
-            return View(plantTypes);
+            var plantCount = plants.Count();    
+            var plantPerPage = 8;
+            var totalPages = Math.Ceiling((decimal)plantCount / plantPerPage);
+            
+            /*ViewBag.TotalPages = totalPages;
+            ViewBag.PageNo = pageNo;*/
+
+            var pagingInfo = new PagingInfo()
+            {
+                CurrentPage = pageNo,
+                ItemsPerPage = plantPerPage,
+                TotalItems = plantCount
+            };
+
+            var paginatedPlants = plants.OrderBy(p=>p.Id)
+                                 .Skip((pageNo-1)*plantPerPage)
+                                 .Take(plantPerPage)
+                                 .ToList();
+            var model = new PaginationPlantViewModel()
+            {
+                PagingInfo = pagingInfo,
+                Plants = paginatedPlants
+            };
+            
+            return View(model);
         }
 
         public IActionResult Privacy()

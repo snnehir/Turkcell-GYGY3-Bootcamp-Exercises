@@ -1,0 +1,15 @@
+﻿@model PlantDisplayResponse
+
+@{
+    var rateStar = new string('⭐', (int)Model.Rating);
+}
+
+<div class="card my-2">
+    <img src="@Model.ImageUrl" class="img-fluid center-image my-2" />
+    <div class="card-body">
+        <h4 class="card-title">@Model.Name</h4>
+        <p class="card-text"> @rateStar </p>
+        <p class="card-text">@Model.Price $</p>
+    </div>
+</div>
+

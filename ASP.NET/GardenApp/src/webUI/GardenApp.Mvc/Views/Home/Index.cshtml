@@ -1,26 +1,35 @@
-﻿@model IEnumerable<PlantDisplayResponse>
+﻿@model PaginationPlantViewModel
 @{
     ViewData["Title"] = "Home Page";
+    var columnCount = 0;
 }
 
-<div class="row">
-    @foreach (var plantDisplay in Model)
+<div class="row m-4">
+    @foreach (var plantDisplay in Model.Plants)
     {
-
-        var rateStar = new string('⭐', (int)plantDisplay.Rating);
-
+        @if (columnCount != 0 && columnCount % 4 == 0)
+        {
+            @:</div><div class="row m-4">
+        }      
         <div class="col-3">
-
-            <div class="card">
-                <img src="@plantDisplay.ImageUrl" class="img-fluid" />
-                <div class="card-body">
-                    <h4 class="card-title">@plantDisplay.Name</h4>
-
-                    <p class="card-text"> @rateStar </p>
-                    <p class="card-text">@plantDisplay.Price $</p>
-
-                </div>
-            </div>
+           <partial name="_PlantDisplay" model="plantDisplay"/>
         </div>
+          columnCount++;
     }
 </div>
+
+<!-- pagination -->
+
+<div page-action="Index" page-model="@Model.PagingInfo"></div>
+
+@*<div>
+    <ul class="pagination pagination-lg">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i==ViewBag.PageNo ? "active":"")">
+                <a asp-action="Index" asp-route-pageNo="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+*@
