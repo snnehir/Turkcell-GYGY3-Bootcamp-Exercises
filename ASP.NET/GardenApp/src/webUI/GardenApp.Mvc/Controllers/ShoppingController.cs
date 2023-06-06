@@ -3,23 +3,24 @@ using GardenApp.Mvc.Extensions;
 using GardenApp.Mvc.Models;
 using GardenApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace GardenApp.Mvc.Controllers
 {
     public class ShoppingController : Controller
     {
         private readonly IPlantService plantService;
-        public ShoppingController(IPlantService plantService)
+        private readonly IPlantTypeService plantTypeService;
+        public ShoppingController(IPlantService plantService, IPlantTypeService plantTypeService)
         {
             this.plantService = plantService;
+            this.plantTypeService = plantTypeService;
         }
         public IActionResult Index()
         {
             var collection = getPlantCollectionFromSession();
             return View(collection);
         }
-
+        
         public IActionResult AddPlant(int id)
         {
             PlantDisplayResponse selectedPlant = plantService.GetPlant(id);
@@ -95,5 +96,7 @@ namespace GardenApp.Mvc.Controllers
             HttpContext.Session.SetJson("basket", courseCollection);
 
         }
+        
+       
     }
 }

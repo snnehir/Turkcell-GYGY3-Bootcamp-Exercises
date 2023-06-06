@@ -1,4 +1,6 @@
-﻿using GardenApp.DataTransferObjects.Responses;
+﻿using GardenApp.DataTransferObjects.Requests;
+using GardenApp.DataTransferObjects.Responses;
+using GardenApp.Entities;
 using GardenApp.Infrastructure.Repositories.PlantRepository;
 using Mapster;
 using MapsterMapper;
@@ -33,6 +35,12 @@ namespace GardenApp.Services
             var items = _repository.GetAll();
             var responses = items.Adapt<IEnumerable<PlantDisplayResponse>>();
             return responses;
+        }
+
+        public async Task CreatePlantAsync(CreateNewPlantRequest request)
+        {
+            var plantModel = request.Adapt<Plant>();
+            await _repository.CreateAsync(plantModel);
         }
     }
 }

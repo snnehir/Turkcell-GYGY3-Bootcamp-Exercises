@@ -1,4 +1,5 @@
-﻿using GardenApp.DataTransferObjects.Responses;
+﻿using GardenApp.DataTransferObjects.Requests;
+using GardenApp.DataTransferObjects.Responses;
 
 namespace GardenApp.Services
 {
@@ -7,5 +8,6 @@ namespace GardenApp.Services
         IEnumerable<PlantDisplayResponse> GetPlantDisplayResponse();
         IEnumerable<PlantDisplayResponse> GetPlantByPlantType(int plantTypeId);
         PlantDisplayResponse GetPlant(int id);
+        Task CreatePlantAsync(CreateNewPlantRequest request);
     }
 }

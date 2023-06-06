@@ -1,0 +1,59 @@
+﻿@model CreateNewPlantViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create New Plant</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NewPlant.Name" class="control-label"></label>
+                <input asp-for="NewPlant.Name" class="form-control" />
+                <span asp-validation-for="NewPlant.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPlant.Description" class="control-label"></label>
+                <input asp-for="NewPlant.Description" class="form-control" />
+                <span asp-validation-for="NewPlant.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPlant.Price" class="control-label"></label>
+                <input asp-for="NewPlant.Price" class="form-control" />
+                <span asp-validation-for="NewPlant.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPlant.ImageUrl" class="control-label">Image Url</label>
+                <input asp-for="NewPlant.ImageUrl" class="form-control" />
+                <span asp-validation-for="NewPlant.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPlant.PlantTypeId" class="control-label">Plant Type</label>
+                <select asp-for="NewPlant.PlantTypeId" class="form-control" asp-items="Model.PlantTypes">
+                    <option hidden value="" disabled selected>Lütfen kategori seçin</option>
+                </select>
+                <span asp-validation-for="NewPlant.PlantTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPlant.Rating" class="control-label"></label>
+                <input asp-for="NewPlant.Rating" class="form-control" />
+                <span asp-validation-for="NewPlant.Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
