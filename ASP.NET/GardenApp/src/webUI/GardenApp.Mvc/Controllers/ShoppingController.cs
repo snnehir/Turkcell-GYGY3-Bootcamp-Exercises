@@ -1,4 +1,5 @@
 ﻿using GardenApp.DataTransferObjects.Responses;
+using GardenApp.Mvc.Extensions;
 using GardenApp.Mvc.Models;
 using GardenApp.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -35,25 +36,64 @@ namespace GardenApp.Mvc.Controllers
             return Json(new { message = $"Plant with id {id} is added to your cart." });
         }
 
-        private void saveToSession(PlantCollection plantCollection)
+        public IActionResult IncreasePlantQuantity(int id)
         {
-            var serialized = JsonSerializer.Serialize<PlantCollection>(plantCollection);
-            if (!string.IsNullOrWhiteSpace(serialized))
+            // get collection
+            PlantCollection plantCollection = getPlantCollectionFromSession();
+            if(plantCollection != null)
             {
-                HttpContext.Session.SetString("Basket", serialized);
+                var item = plantCollection.PlantItems.Any(p=>p.Plant.Id == id);
+                if(item)
+                {
+                    plantCollection.PlantItems.FirstOrDefault(p => p.Plant.Id == id).Quantity += 1;
+                    saveToSession(plantCollection);
+                }
+                return Json(new { message = $"Number of plant with id {id} is increased." });
             }
+            return Json(new { message = $"Plant with id {id} is not found" });
+        }
 
+        public IActionResult DecreasePlantQuantity(int id)
+        {
+            // get collection
+            PlantCollection plantCollection = getPlantCollectionFromSession();
+            if (plantCollection != null)
+            {
+                var exists = plantCollection.PlantItems.Any(p => p.Plant.Id == id);
+                if (exists)
+                {
+                    var item = plantCollection.PlantItems.FirstOrDefault(p => p.Plant.Id == id);
+                    // remove item 
+                    if (item.Quantity == 1)
+                    {
+                        plantCollection.PlantItems.Remove(item);
+                        saveToSession(plantCollection);
+                        return Json(new { message = $"Rlant with id {id} is removed." });
+                    }
+                    else
+                    {
+                        plantCollection.PlantItems.FirstOrDefault(p => p.Plant.Id == id).Quantity -= 1;
+                        saveToSession(plantCollection);
+                        return Json(new { message = $"Number of plant with id {id} is decreased." });
+                    }
+                    
+                }
+                
+            }
+            return Json(new { message = $"Plant with id {id} is not found" });
         }
 
         private PlantCollection getPlantCollectionFromSession()
         {
-            var serializedString = HttpContext.Session.GetString("Basket");
-            if (serializedString == null)
-            {
-                return new PlantCollection();
-            }
-            var collection = JsonSerializer.Deserialize<PlantCollection>(serializedString);
-            return collection;
+            return HttpContext.Session.GetJson<PlantCollection>("basket") ?? new PlantCollection();
+        }
+
+
+        private void saveToSession(PlantCollection courseCollection)
+        {
+
+            HttpContext.Session.SetJson("basket", courseCollection);
+
         }
     }
 }

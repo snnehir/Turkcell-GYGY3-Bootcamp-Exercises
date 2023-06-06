@@ -1,0 +1,13 @@
+﻿@model PlantCollection
+@if (Model == null)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Shopping" asp-action="Index">Cart</a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Shopping" asp-action="Index">Cart<span class="badge rounded-pill bg-black">@Model.TotalPlantsCount()</span> </a>
+    </li>
+}

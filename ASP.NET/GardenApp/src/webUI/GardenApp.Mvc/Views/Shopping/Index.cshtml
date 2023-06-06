@@ -19,18 +19,90 @@ else
         <tbody>
             @foreach (var plantItem in Model.PlantItems)
             {
-                <tr>
+                <tr id="cart-item-@plantItem.Plant.Id">
                     <td>@plantItem.Plant.Name</td>
-                    <td>@plantItem.Plant.Price$</td>
-                    <td>@plantItem.Quantity</td>
-                    <td>@(plantItem.Quantity * plantItem.Plant.Price)$</td>
+                    <td id="item-@plantItem.Plant.Id-price">@plantItem.Plant.Price$</td>
+                    <td>
+                        <button class="btn btn-danger text-center rounded-circle decrease-btn" data-id="@plantItem.Plant.Id" style="width: 37px; height: 37px;"> - </button>
+                        <span class="mx-2">@plantItem.Quantity</span>
+                        <button class="btn btn-success text-center rounded-circle increase-btn" data-id="@plantItem.Plant.Id" style="width: 37px; height: 37px;"> + </button>
+                    </td>
+                    <td ><span id="item-@plantItem.Plant.Id-subtotal">@(plantItem.Quantity * plantItem.Plant.Price)</span>$</td>
                 </tr>
             }
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4">Total Price: @Model.TotalPrice()$</td>
+                <td colspan="4">Total Price: <span id="total-price">@Model.TotalPrice()</span>$</td>
             </tr>
         </tfoot>
     </table>
+}
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function(){
+            $(".increase-btn").on("click", function(){
+                let id = $(this).data('id');
+                console.log(id)
+                var spanElement = $(this).siblings("span");
+                var subTotalPriceElement = $(`#item-${id}-subtotal`)
+                var totalPriceElement = $("#total-price")
+                $.ajax({
+                    url: '/Shopping/IncreasePlantQuantity/' + id,
+                    type: 'GET',
+                    success: function (data) {
+                        let quantity = parseInt(spanElement.text()) + 1;
+                        let price = parseFloat($(`#item-${id}-price`).text())
+                        let totalPrice = parseFloat(totalPriceElement.text()) + price
+                        spanElement.text(quantity);
+                        subTotalPriceElement.text(quantity * price)
+                        totalPriceElement.text(totalPrice)
+                        console.log(data)
+                        $('.toast-body').text(data.message);
+                        alertify.success(data.message);
+                        location = location
+                    },
+                    error: function (err) {
+                        console.log('error: ', error);
+                    }
+                })
+            })
+        })
+
+        $(document).ready(function () {
+            $(".decrease-btn").on("click", function () {
+                let id = $(this).data('id');
+                console.log(id)
+                var spanElement = $(this).siblings("span");
+                var subTotalPriceElement = $(`#item-${id}-subtotal`)
+                var totalPriceElement = $("#total-price")
+                $.ajax({
+                    url: '/Shopping/DecreasePlantQuantity/' + id,
+                    type: 'GET',
+                    success: function (data) {
+                        let quantity = parseInt(spanElement.text()) - 1;
+                        let price = parseFloat($(`#item-${id}-price`).text())
+                        let totalPrice = parseFloat(totalPriceElement.text()) - price
+                        totalPriceElement.text(totalPrice)
+                        // TODO: when removed item is the last one and basket becomes totallt empty...
+                        if(quantity === 0){
+                            $(`#cart-item-${id}`).remove()
+                        }else{
+                            spanElement.text(quantity);
+                            subTotalPriceElement.text(quantity * price)
+                        }
+                        $('.toast-body').text(data.message);
+                        alertify.warning(data.message);
+                        location = location // refresh page
+                    },
+                    error: function (err) {
+                        console.log('error: ', error);
+                    }
+                })
+            })
+        })
+    </script>
+
 }
